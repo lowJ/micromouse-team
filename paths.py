@@ -1,9 +1,3 @@
-#issues:
-#   Direction matters when moving to a block
-
-
-# fuck, this code is hard to understand
-
 class Block():
     def __init__(self):
         ''' Generated a basic block of a maze '''
