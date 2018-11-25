@@ -14,7 +14,8 @@ class Maze():
         self.goal = [(7,7),(7,8),(8,7),(8,8)] # four goal markers for the center of the maze
 
     def getTime(self,x,y,direction):
-        return self.maze[x][y].time[direction]
+        ''' Returns the time at the specified location '''
+        return self.maze[x][y].time[direction] # returns the time
 
 
 
