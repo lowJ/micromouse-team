@@ -8,10 +8,11 @@ def Traverse(maze,mouse):
         ScanBlock(maze,mouse)
         mouse.moveForward()
         while not wallForward():
-            if tickPostion() and not ScanBlock(maze,mouse):
+            if tickPostion(False) and not ScanBlock(maze,mouse):
                 break
         if mouse.getDistanceMoved() > 15:
             ScanBlock(maze,mouse)
+            tickPosition(True)
         mouse.setMovement(0)    
         mouse.stop()
         moveToNextPoint(pois,maze,mouse)
