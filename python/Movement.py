@@ -15,8 +15,8 @@ class Mouse():
     def stop(self):
         pass
 
-    def tickPosition(self):
-        if self.getDistanceMoved() > 18:
+    def tickPosition(self, flag):
+        if self.getDistanceMoved() > 18 or flag:
             currMove = self.moves[self.direction]
             self.postion[0] += currMove[0]
             self.postion[1] += currMove[1]
