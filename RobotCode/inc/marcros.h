@@ -6,31 +6,32 @@
 // Defines a motor stucture to allow for easier acess to pins
 typedef struct{
   int motorEN, motorForward, motorReverse;
+  bool reverse;
 } motor;
 
 // Define front left motor pins
 #define FL_motorEN 0
 #define FL_motorForward 0
 #define FL_motorReverse 0
-const motor FL = {FL_motorEN,FL_motorForward,FL_motorReverse};
+const motor FL = {FL_motorEN,FL_motorForward,FL_motorReverse,true};
 
 // Define front right motor pins
 #define FR_motorEN 0
 #define FR_motorForward 0
 #define FR_motorReverse 0
-const motor FR {FR_motorEN,FR_motorForward,FR_motorReverse};
+const motor FR {FR_motorEN,FR_motorForward,FR_motorReverse,false};
 
 // Define back left motor pins
 #define BL_motorEN 0
 #define BL_motorForward 0
 #define BL_motorReverse 0
-const motor BL {BL_motorEN,BL_motorForward,BL_motorReverse};
+const motor BL {BL_motorEN,BL_motorForward,BL_motorReverse,true};
 
 // Define back right motor pins
 #define BR_motorEN 0
 #define BR_motorForward 0
 #define BR_motorReverse 0
-const motor BR {BR_motorEN,BR_motorForward,BR_motorReverse};
+const motor BR {BR_motorEN,BR_motorForward,BR_motorReverse,false};
 
 // Define motor array to allow for looping through motors
 const motor motors[4] = {FL,FR,BL,BR};
