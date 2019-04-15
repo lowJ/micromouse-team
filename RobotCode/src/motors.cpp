@@ -17,7 +17,7 @@ void motorSetup(motor m)
 // <rv> of 1 with <fv> of 0 moves motor backward
 void motorMovement(motor m, int speed,int fv, int rv)
 {
-    if (m.reverse)
+    if (m.reverse and speed > 0)
     {
         analogWrite(m.motorEN,speed);
         digitalWrite(m.motorForward,1-fv);
