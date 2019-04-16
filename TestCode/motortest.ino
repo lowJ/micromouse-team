@@ -82,7 +82,7 @@ bool detectWall(int reciever, int threshold){
 //
 
 void setupEncoder(){
-  pinMode(encoder_pin,INPUT);
+  pinMode(encoder_pin,OUTPUT);
 }
 
 
