@@ -404,8 +404,6 @@ Wire Wire Line
 Connection ~ 3150 1800
 Wire Wire Line
 	3150 1800 3850 1800
-Text Label 1250 2050 2    50   ~ 0
-1.8K
 $Comp
 L Device:R R4
 U 1 1 5CC0A77D
@@ -441,6 +439,8 @@ F 3 "~" H 2600 1400 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	6350 2550 6850 2550
-Text Label 1100 1450 0    50   ~ 0
-120
+Text Notes 650  2100 0    50   ~ 0
+R1-3 = 1.8kΩ\n
+Text Notes 700  1400 0    50   ~ 0
+R4-6 = 120Ω\n
 $EndSCHEMATC
