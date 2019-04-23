@@ -1,3 +1,5 @@
 (sym_lib_table
   (lib (name Encoders)(type Legacy)(uri C:/Users/sotan/Documents/KiCAD/Libraries/Encoders.lib)(options "")(descr ""))
+  (lib (name Micromouse-rescue)(type Legacy)(uri ${KIPRJMOD}/Micromouse-rescue.lib)(options "")(descr ""))
+  (lib (name motor_encoder)(type Legacy)(uri /Users/Jonathan/Desktop/micromouse-team/Micromouse/symbs/motor_encoder.lib)(options "")(descr ""))
 )
