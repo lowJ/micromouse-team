@@ -441,4 +441,6 @@ F 3 "~" H 2600 1400 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	6350 2550 6850 2550
+Text Label 1100 1450 0    50   ~ 0
+120
 $EndSCHEMATC
