@@ -10,28 +10,30 @@ typedef struct{
 } motor;
 
 // Define front left motor pins
-#define FL_motorEN 0
-#define FL_motorForward 0
-#define FL_motorReverse 0
-#define FL_encoder 0
+#define FL_motorEN 8
+#define FL_motorForward 5
+#define FL_motorReverse 6
+#define FL_encoder_1 17
+#define FL_encoder_2 18
 const motor FL = {FL_motorEN,FL_motorForward,FL_motorReverse,true};
 
 // Define front right motor pins
-#define FR_motorEN 0
-#define FR_motorForward 0
-#define FR_motorReverse 0
-#define FR_encoder 0
+#define FR_motorEN 7
+#define FR_motorForward 3
+#define FR_motorReverse 4
+#define FR_encoder_1 19
+#define FR_encoder_2 20
 const motor FR {FR_motorEN,FR_motorForward,FR_motorReverse,false};
 
 // Define back left motor pins
-#define BL_motorEN 0
+#define BL_motorEN 8
 #define BL_motorForward 0
 #define BL_motorReverse 0
 #define BL_encoder 0
 const motor BL {BL_motorEN,BL_motorForward,BL_motorReverse,true};
 
 // Define back right motor pins
-#define BR_motorEN 0
+#define BR_motorEN 7
 #define BR_motorForward 0
 #define BR_motorReverse 0
 #define BR_encoder 0
@@ -41,15 +43,15 @@ const motor BR {BR_motorEN,BR_motorForward,BR_motorReverse,false};
 const motor motors[4] = {FL,FR,BL,BR};
 
 // Define IR reciever pin values
-#define receiverF 0
-#define receiverL 0
-#define receiverR 0
+#define receiverF 15
+#define receiverL 14
+#define receiverR 16
 const int recievers[3] = {receiverL,receiverF,receiverR};
 
 // Define IR emitter pin values
-#define emitterF 0
+#define emitterF 1
 #define emitterL 0
-#define emitterR 0
+#define emitterR 2
 const int emitters[3] = {emitterL,emitterF,emitterR};
 
 // Define motor encoder pins

@@ -13,19 +13,29 @@ void encoder::increment()
 // Sets up the encoder pins
 void setupEncoder()
 {
-    pinMode(FL_enc.pin,OUTPUT);
-    pinMode(FR_enc.pin,OUTPUT);
-    pinMode(BL_enc.pin,OUTPUT);
-    pinMode(BR_enc.pin,OUTPUT);
+    pinMode(FL_enc.pin1,INPUT);
+    pinMode(FR_enc.pin1,INPUT);
+    pinMode(BL_enc.pin1,INPUT);
+    pinMode(BR_enc.pin1,INPUT);
+
+    pinMode(FL_enc.pin2,INPUT);
+    pinMode(FR_enc.pin2,INPUT);
+    pinMode(BL_enc.pin2,INPUT);
+    pinMode(BR_enc.pin2,INPUT);
 }
 
 // Starts up interupts to allow for the encoder values to tick up
 void setupInterrupt()
 {
-    attachInterrupt(digitalPinToInterrupt(FL_enc.pin), FL_enc.increment,CHANGE);
-    attachInterrupt(digitalPinToInterrupt(FR_enc.pin), FR_enc.increment,CHANGE);
-    attachInterrupt(digitalPinToInterrupt(BL_enc.pin), BL_enc.increment,CHANGE);
-    attachInterrupt(digitalPinToInterrupt(BR_enc.pin), BR_enc.increment,CHANGE);
+    attachInterrupt(digitalPinToInterrupt(FL_enc.pin1), FL_enc.increment,CHANGE);
+    attachInterrupt(digitalPinToInterrupt(FR_enc.pin1), FR_enc.increment,CHANGE);
+    attachInterrupt(digitalPinToInterrupt(BL_enc.pin1), BL_enc.increment,CHANGE);
+    attachInterrupt(digitalPinToInterrupt(BR_enc.pin1), BR_enc.increment,CHANGE);
+
+    attachInterrupt(digitalPinToInterrupt(FL_enc.pin2), FL_enc.increment,CHANGE);
+    attachInterrupt(digitalPinToInterrupt(FR_enc.pin2), FR_enc.increment,CHANGE);
+    attachInterrupt(digitalPinToInterrupt(BL_enc.pin2), BL_enc.increment,CHANGE);
+    attachInterrupt(digitalPinToInterrupt(BR_enc.pin2), BR_enc.increment,CHANGE);
 }
 
 // Resets all the encoder values
