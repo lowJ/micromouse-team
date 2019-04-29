@@ -63,7 +63,14 @@ const int emitters[3] = {emitterL,emitterF,emitterR};
 // Define important encoder/movement constants
 #define ENCODER_STEPS 360
 #define ENCODER_CIRC  2.9*PI //in cm
+#define ROBOT_DIAMETER 0 // the distance from the center of the FL wheel to the center of the BR wheel
+#define ROBOT_TURNING_CIRC ROBOT_DIAMETER * PI 
+
 #define STEP_TO_CM ENCODER_CIRC / ENCODER_STEPS
-#define CM_TO_STEP = 1 / STEP_TO_CM
+#define CM_TO_STEP  1 / STEP_TO_CM
+
+#define COS_45 0.70710678118 // this is literally cos(45 deg)
+#define DEG_TO_STEP CM_TO_STEP * ROBOT_TURNING_CIRC * COS_45 / 360 // transforms a certain amt of degrees to the encoder steps required to make the turn 
+#define STEP_TO_DEG 1 / DEG_TO_STEP
 
 #endif

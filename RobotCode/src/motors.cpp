@@ -31,6 +31,28 @@ void motorMovement(motor m, int speed,int fv, int rv)
     }
 }
 
+// Stops the robot when <encoderVal> > <threshold>
+void runTillThresholdForward(int& encoderVal, int threshold)
+{
+    int initEnc = encoderVal
+    while(encoderVal-initEnc < threshold)
+    {
+        continue;
+    }
+    off();
+}
+
+// Stops the robot when <encoderVal> < <threshold>
+void runTillThresholdBackward(int& encoderVal, int threshold)
+{
+    int initEnc = encoderVal
+    while(encoderVal-initEnc > threshold)
+    {
+        continue;
+    }
+    off();
+}
+
 // Moves robot forward with speed <speed>
 void forward(int speed)
 {
@@ -43,11 +65,8 @@ void forward(int speed)
 // Moves robot forward at speed <speed> for <rotations> amount of wheel revolutions
 void forwardTillRotation(int speed, float rotations)
 {
-    motorMovement(motors[0], speed,1,0);
-    while(encA < rotations * ENCODER_STEPS)
-    {
-        // TODO
-    }
+    forward(speed);
+    runTillThresholdForward(FL_enc.ticks,static_cast<int>(CM_TO_STEP * rotations));
 }
 
 // Moves robot backward with speed <speed>
@@ -59,22 +78,33 @@ void reverse(int speed)
     }
 }
 
+// Moves robot forward at speed <speed> for <rotations> amount of wheel revolutions
+void reverseTillRotation(int speed, float rotations)
+{
+    reverse(speed);
+    runTillThresholdBackward(FL_enc.ticks,static_cast<int>(CM_TO_STEP * rotations));
+}
+
 // Turns robot left, counterclockwise, at speed <speed>
-void turnLeft(int speed)
+void turnLeft(int speed, int degrees)
 {
     motorMovement(FL,speed,0,1);
     motorMovement(BL,speed,0,1);
     motorMovement(FR,speed,1,0);
     motorMovement(BR,speed,1,0);
+
+    runTillThresholdForward(FR_enc.ticks,static_cast<int>(DEG_TO_STEP * rotations));
 }
 
 // Turns robot right, clockwise, at speed <speed>
-void turnRight(int speed)
+void turnRight(int speed,int degrees)
 {
     motorMovement(FL,speed,1,0);
     motorMovement(BL,speed,1,0);
     motorMovement(FR,speed,0,1);
     motorMovement(BR,speed,0,1);
+
+    runTillThresholdForward(FL_enc.ticks,static_cast<int>(DEG_TO_STEP * rotations));
 }
 
 // Stops all robot motors
