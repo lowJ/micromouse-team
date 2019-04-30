@@ -42,11 +42,11 @@ void runTillThresholdForward(int& encoderVal, int threshold)
     off();
 }
 
-// Stops the robot when <encoderVal> < <threshold>
+// Stops the robot when -<encoderVal> > <threshold>
 void runTillThresholdBackward(int& encoderVal, int threshold)
 {
     int initEnc = encoderVal
-    while(encoderVal-initEnc > threshold)
+    while(-encoderVal+initEnc < threshold)
     {
         continue;
     }
@@ -63,10 +63,10 @@ void forward(int speed)
 }
 
 // Moves robot forward at speed <speed> for <rotations> amount of wheel revolutions
-void forwardTillRotation(int speed, float rotations)
+void forwardTillDistance(int speed, float distance)
 {
     forward(speed);
-    runTillThresholdForward(FL_enc.ticks,static_cast<int>(CM_TO_STEP * rotations));
+    runTillThresholdForward(FL_enc.ticks,static_cast<int>(CM_TO_STEP * distance));
 }
 
 // Moves robot backward with speed <speed>
@@ -79,10 +79,10 @@ void reverse(int speed)
 }
 
 // Moves robot forward at speed <speed> for <rotations> amount of wheel revolutions
-void reverseTillRotation(int speed, float rotations)
+void reverseTillDistance(int speed, float distance)
 {
     reverse(speed);
-    runTillThresholdBackward(FL_enc.ticks,static_cast<int>(CM_TO_STEP * rotations));
+    runTillThresholdBackward(FL_enc.ticks,static_cast<int>(CM_TO_STEP * distance));
 }
 
 // Turns robot left, counterclockwise, at speed <speed>
@@ -93,7 +93,7 @@ void turnLeft(int speed, int degrees)
     motorMovement(FR,speed,1,0);
     motorMovement(BR,speed,1,0);
 
-    runTillThresholdForward(FR_enc.ticks,static_cast<int>(DEG_TO_STEP * rotations));
+    runTillThresholdForward(FR_enc.ticks,static_cast<int>(DEG_TO_STEP * degrees));
 }
 
 // Turns robot right, clockwise, at speed <speed>
@@ -104,7 +104,7 @@ void turnRight(int speed,int degrees)
     motorMovement(FR,speed,0,1);
     motorMovement(BR,speed,0,1);
 
-    runTillThresholdForward(FL_enc.ticks,static_cast<int>(DEG_TO_STEP * rotations));
+    runTillThresholdForward(FL_enc.ticks,static_cast<int>(DEG_TO_STEP * degrees));
 }
 
 // Stops all robot motors

@@ -15,9 +15,11 @@ void runTillThresholdBackward(int& encoderVal, int threshold);
 
 void forward(int speed);
 
-void forwardTillRotation(int speed, float rotations);
+void forwardTillDistance(int speed, float distance);
 
 void reverse(int speed);
+
+void reverseTillDistance(int speed, float distance);
 
 void turnLeft(int speed, int degrees);
 
