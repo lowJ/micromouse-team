@@ -31,6 +31,19 @@ bool validMove(int x, int y, int* movement, Maze& maze)
 
 int* move(int* task , int* movement, Maze& maze)
 {
+    if validMove(task[0],task[1],movement,maze)
+    {
+        int nTime = maze.getTime(task[0] + movement[0],task[1] + movement[1], movement[2]);
+        int cTime = maze.getTime(task[0],task[1],task[2]);
+        block curr = maze.getBlock(task[0],task[1]);
+        if(nTime == 0 or nTime > cTime + 1)
+        {
+            block b = maze.getBlock(task[0] + movement[0],task[1] + movement[1]);
+            b.time = curr.time + 1;
+            b.previous = task;
+            return {task[0]+movement[0],task[1]+movement[1],movement[2]};
+        }
+    }
     return nullptr;
 }
 
