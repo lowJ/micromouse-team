@@ -72,3 +72,9 @@ Maze::Maze()
     this->start = new int[3] {15,0,0};
     goal = new int[4][2] {{7,7},{7,8},{8,7},{8,8}};
 }
+
+// Finds if <position> corresponds to a goal position
+bool inGoal(int* position)
+{
+    return position[0] >= 7 && position[0] <= 8 && position[1] >= 7 && position[1] <= 8;
+}

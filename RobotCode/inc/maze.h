@@ -27,6 +27,7 @@ public:
     void setPrevious(int x, int y, int * previous);
     void mark(int x, int y);
     void setTime(int x, int y, float time);
+    bool inGoal(int* position);
 };
 
 #endif
