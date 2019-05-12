@@ -1,8 +1,8 @@
-1. Integrate motor encoder code into motors.cpp
-    a. Get constants for turning circle
-    b. Write code to turn x degrees
-    c. Finish code to move forward x inches
+1. Integrate motor encoder code into motors.cpp √
+    a. Get constants for turning circle √
+    b. Write code to turn x degrees √
+    c. Finish code to move forward x inches √
 2. PID system
 3. Create maze class √
 4. Write code to path through maze initially
-5. Write code to find and move along shortest path
+5. Write code to find and move along shortest path √

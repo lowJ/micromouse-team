@@ -13,6 +13,7 @@ struct block {
 
 class Maze
 {
+private:
     block maze[16][16];
     int * start;   
     int (*goal)[2];
