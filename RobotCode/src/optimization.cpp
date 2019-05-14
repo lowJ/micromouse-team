@@ -2,6 +2,7 @@
 #include "optimization.h"
 #include "maze.h"
 #include <queue>
+#include "../inc/marcros.h"
 
 void ShortestPath(Maze& maze)
 {
@@ -26,7 +27,7 @@ void ShortestPath(Maze& maze)
 
 bool validMove(int x, int y, int* movement, Maze& maze)
 {
-    return 0 <= x + movement[0] and x + movement[0] <= 15 && 0 <= y + movement[1] and y + movement[1] <= 15 && maze.hasWall(x,y,movement[2]); 
+    return 0 <= x + movement[0] and x + movement[0] <= MAZE_WIDTH-1 && 0 <= y + movement[1] and y + movement[1] <= MAZE_HEIGHT-1 && maze.hasWall(x,y,movement[2]); 
 }
 
 int* move(int* task , int* movement, Maze& maze)

@@ -3,6 +3,8 @@
 #ifndef MAZE
 #define MAZE
 
+#include "marcros.h"
+
 struct block {
     float time;
     bool mark;
@@ -14,7 +16,7 @@ struct block {
 class Maze
 {
     private:
-        block maze[16][16];
+        block maze[MAZE_WIDTH][MAZE_HEIGHT];
         int * start;   
         int (*goal)[2];
 

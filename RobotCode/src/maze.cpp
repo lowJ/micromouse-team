@@ -1,6 +1,7 @@
 // defines the maze and functions to easily acess data within it
 
 #include "../inc/maze.h"
+#include "../inc/marcros.h"
 
 // Constructs a new block with some initial values
 block::block() 
@@ -62,19 +63,19 @@ void Maze::setWall(int x, int y,int direction)
 // Constructs a new maze with empty blocks
 Maze::Maze() 
 {
-    for (int i = 0; i < 16; i++) 
+    for (int i = 0; i < MAZE_WIDTH; i++) 
     {
-        for (int j = 0; j < 16; j++) 
+        for (int j = 0; j < MAZE_HEIGHT; j++) 
         {
             this->maze[i][j] = block();
         }
     }
-    this->start = new int[3] {15,0,0};
+    this->start = new int[3] {MAZE_WIDTH-1,0,0};
     goal = new int[4][2] {{7,7},{7,8},{8,7},{8,8}};
 }
 
 // Finds if <position> corresponds to a goal position
 bool inGoal(int* position)
 {
-    return position[0] >= 7 && position[0] <= 8 && position[1] >= 7 && position[1] <= 8;
+    return position[0] >= MAZE_WIDTH/2-1 && position[0] <= MAZE_WIDTH/2 && position[1] >= MAZE_HEIGHT/2-1 && position[1] <= MAZE_HEIGHT/2;
 }
