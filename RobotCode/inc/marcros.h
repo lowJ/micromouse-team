@@ -3,6 +3,12 @@
 #ifndef MACRO
 #define MACRO
 
+// Different Maze Constants
+#define MAZE_WIDTH 16
+#define MAZE_HEIGHT 16
+#define BLOCK_SIZE 18
+
+
 // Defines a motor stucture to allow for easier acess to pins
 typedef struct{
   int motorEN, motorForward, motorReverse;
