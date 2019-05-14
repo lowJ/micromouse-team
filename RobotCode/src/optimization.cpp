@@ -3,6 +3,7 @@
 #include "maze.h"
 #include <queue>
 #include "../inc/marcros.h"
+#include "../inc/followpath.h"
 
 void ShortestPath(Maze& maze)
 {
@@ -48,3 +49,94 @@ int* move(int* task , int* movement, Maze& maze)
     return nullptr;
 }
 
+int* getBestGoal(Maze& maze)
+{
+    float bestTime = 0;
+    int** bestBlock = nullptr;
+    float tempTime;
+    for(int* position: maze.getGoal())
+    {
+        tempTime = maze.getTime(position[0],position[1]);
+        if(bestBlock == nullptr or tempTime < bestTime)
+        {
+            bestTime = tempTime;
+            bestBlock = &position;
+        }
+    }
+    return *bestBlock;
+}
+
+bool notEnd(int* arr)
+{
+    return !(arr[0] == -1 && arr[1] == -1 && arr[2] == -1);
+}
+
+int getLeft(int pos)
+{
+    switch(pos)
+    {
+        case 0:
+        return 1;
+        case 1:
+        return 3;
+        case 2:
+        return 0;
+        case 3;
+        return 2;
+    }
+}
+
+int fixGoalDir(int* endPos, int* prevPos)
+{
+    if(endPos[0] > prevPos[0])
+    {
+        return 3;
+    }
+    else if(endPos[0] < prevPos[0])
+    {
+        return 0;
+    }
+    else if(endPos[1] < prevPos[1])
+    {
+        return 1;
+    }
+    return 2;
+}
+
+FollowPath getOptimalPath(Maze& maze)
+{
+    FollowPath optPath;
+    int* bestGoal = getBestGoal(maze);
+    int currentPos[3] = {bestGoal[0],bestGoal[1],fixGoalDir(bestGoal,maze.getPrevious(bestGoal[0],bestGoal[1])};
+    int nextPos[3];
+    do
+    {
+        nextPos = maze.getPrevious(currentPos[0],currentPos[1]);
+        if(nextPos[2] == currentPos[2])
+        {
+            optPath.pushMovement('f');
+        }
+        else if(getLeft(nextPos[2]) == currentPos[2])
+        {
+            optPath.pushMovement('l')
+        }
+        else
+        {
+            optPath.pushMovement('r')
+        }
+
+    }
+    while(notEnd(currentPos));
+    return optPath;
+}
+
+def getPathList(maze):
+    ''' gets the list of blocks used to reach the goal the quickest '''
+    goals = sum([[(g[0],g[1],i) for i in range(4) if maze.getTime(g[0],g[1],i) != 0] for g in maze.goal],[]) # gets all goals that have been reached
+    start = min(goals,key = lambda x: maze.getTime(x[0],x[1],x[2])) # gets the goal you can reach quickest
+    pathList = [start] # creates the start of the list of blocks
+    nextPos = maze.maze[pathList[0][0]][pathList[0][1]].previous[pathList[0][2]] # gets previous block in the sequence
+    while nextPos != (-1,-1,-1): # continues to get the next block until you have reached the start
+        pathList.insert(0,nextPos) # puts the next block in the sequence
+        nextPos = maze.maze[pathList[0][0]][pathList[0][1]].previous[pathList[0][2]] # gets previous block in the sequence
+    return pathList # returns path list

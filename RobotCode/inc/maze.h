@@ -18,7 +18,7 @@ class Maze
     private:
         block maze[MAZE_WIDTH][MAZE_HEIGHT];
         int * start;   
-        int (*goal)[2];
+        int goal[4][2];
 
     public:
         Maze();
@@ -31,6 +31,7 @@ class Maze
         void mark(int x, int y);
         void setTime(int x, int y, float time);
         bool inGoal(int* position);
+        int** getGoals();
 };
 
 #endif
