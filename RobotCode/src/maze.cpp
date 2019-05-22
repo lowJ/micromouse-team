@@ -10,6 +10,7 @@ block::block()
     this->time = 0;
     this->moves = new bool[4] {false, false, false, false};
     this->previous = new int[3] {-1,-1,-1};
+    this->isPoi = false;
 };
 
 // Returns the time of the block at (<x>,<y>)

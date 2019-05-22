@@ -2,6 +2,7 @@
 #import "../inc/followpath.h"
 #import "../inc/motors.h"
 #include <Arduino.h>
+#include <deque>
 
 FollowPath::FollowPath()
 {

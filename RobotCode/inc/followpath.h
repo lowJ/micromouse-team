@@ -17,7 +17,7 @@ class FollowPath
         void runList();
 
     private:
-        stack <char> pathlist;
+        std::deque<char> pathlist;
 
 };
 
