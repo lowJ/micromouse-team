@@ -4,6 +4,7 @@
 #include "../inc/motors.h"
 #include "../inc/sensors.h"
 #include "../inc/followpath.h"
+#include "../inc/maze.h"
 #include <queue>
 
 void tickPosition();
@@ -177,10 +178,31 @@ def getToPoi(maze,mouse,pois):
                 tasks.insert(0,currMove) # add in the new task to our tasks
 */
 
+bool validMove(int x,int y,int* movement,Maze maze)
+{
+    return 0 <= x + movement[0] and x + movement[0] <= MAZE_WIDTH-1 and 0 <= y + movement[1] and y + movement[1] <= MAZE_HEIGHT-1 and !maze.hasWall(x,y,movement[2]);
+}
+
+/*
 def validMove(x,y,movement,maze):
     ''' checks if the movement is valid for the maze '''
     return 0 <= x + movement[0] <= 15 and 0 <= y + movement[1] <= 15 and not maze.maze[x][y].moves[movement[2]] # returns true if pos exists on the maze and it is not walled off
+*/
 
+int* move(int* task,int* movement,Maze maze)
+{
+    if(validMove(task[0],task[1],movement,maze))
+    {
+        if(task[2] != 3-movement[2])
+        {
+            int newTask[3] = {task[0] + movement[0], task[1] + movement[1], movement[2]};
+            return newTask;
+        }
+    }
+    return nullptr;
+}
+
+/*
 def move(task,movement,maze):
     ''' attempts move in movements direction '''
     if validMove(task[0],task[1],movement,maze): # checks if movement is possible
@@ -189,7 +211,16 @@ def move(task,movement,maze):
             block.previous[movement[2]] = task # sets the block to move towards time to the current blocks position
             return (task[0] + movement[0],task[1] + movement[1],movement[2]) # returns a task for the new block
     return None # return no task if no need to move
+*/
 
+FollowPath getPathList(Maze maze,int* start ,int* end)
+{
+    FollowPath path;
+
+    return path;
+}
+
+/*
 def getPathList(maze,start , end):
     pathList = [end] # creates the start of the list of blocks
     nextPos = maze.maze[pathList[0][0]][pathList[0][1]].previous[pathList[0][2]] # gets previous block in the sequence
@@ -197,3 +228,4 @@ def getPathList(maze,start , end):
         pathList.insert(0,nextPos) # puts the next block in the sequence
         nextPos = maze.maze[pathList[0][0]][pathList[0][1]].previous[pathList[0][2]] # gets previous block in the sequence
     return pathList # returns path list
+*/
