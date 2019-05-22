@@ -118,25 +118,16 @@ FollowPath getOptimalPath(Maze& maze)
         }
         else if(getLeft(nextPos[2]) == currentPos[2])
         {
-            optPath.pushMovement('l')
+            optPath.pushMovement('l');
+            optPath.pushMovement('f');
         }
         else
         {
-            optPath.pushMovement('r')
+            optPath.pushMovement('r');
+            optPath.pushMovement('f');
         }
 
     }
     while(notEnd(currentPos));
     return optPath;
 }
-
-def getPathList(maze):
-    ''' gets the list of blocks used to reach the goal the quickest '''
-    goals = sum([[(g[0],g[1],i) for i in range(4) if maze.getTime(g[0],g[1],i) != 0] for g in maze.goal],[]) # gets all goals that have been reached
-    start = min(goals,key = lambda x: maze.getTime(x[0],x[1],x[2])) # gets the goal you can reach quickest
-    pathList = [start] # creates the start of the list of blocks
-    nextPos = maze.maze[pathList[0][0]][pathList[0][1]].previous[pathList[0][2]] # gets previous block in the sequence
-    while nextPos != (-1,-1,-1): # continues to get the next block until you have reached the start
-        pathList.insert(0,nextPos) # puts the next block in the sequence
-        nextPos = maze.maze[pathList[0][0]][pathList[0][1]].previous[pathList[0][2]] # gets previous block in the sequence
-    return pathList # returns path list

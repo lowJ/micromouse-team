@@ -1,5 +1,9 @@
 //PID.cpp
 /*working variables*/
+<<<<<<< HEAD
+=======
+// This include is causing an error#include <Arduino.h>
+>>>>>>> db8752d710a76274acafa713b21caad8db08a393
 #include <Arduino.h>
 #include "PID.h"
 #include "marcros.h"

@@ -10,6 +10,7 @@ struct block {
     bool mark;
     bool * moves;
     int * previous;
+    bool isPoi;
     block();
 };
 
@@ -22,6 +23,9 @@ class Maze
 
     public:
         Maze();
+        bool isPoi(int x, int y);
+        void markPoi(int x, int y);
+        void unmarkPoi(int x, int y);
         float getTime(int x, int y);
         bool isMarked(int x, int y);
         int * getPrevious(int x, int y);
