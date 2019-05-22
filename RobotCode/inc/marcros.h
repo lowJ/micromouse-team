@@ -15,6 +15,10 @@ typedef struct{
   bool reverse;
 } motor;
 
+// Define movespeed constants
+#define forwardSpeed 100
+#define turnSpeed 80
+
 // Define front left motor pins
 #define FL_motorEN 8
 #define FL_motorForward 5

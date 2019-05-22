@@ -13,6 +13,21 @@ block::block()
     this->isPoi = false;
 };
 
+bool isPoi(int x, int y)
+{
+    return maze[x][y].isPoi;
+}
+
+void markPoi(int x, int y)
+{
+    maze[x][y].isPoi = true;
+}
+
+void unmarkPoi(int x, int y)
+{
+    maze[x][y].isPoi = false;
+}
+
 // Returns the time of the block at (<x>,<y>)
 float Maze::getTime(int x, int y) 
 {

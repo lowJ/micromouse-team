@@ -4,11 +4,11 @@
 
 #include "maze.h"
 #include "followpath.h"
-#include <set>
 
 struct Mouse
 {
-    int position[2] = {15,0};
+    int x = 15;
+    int y = 0;
     int direction = 0;
     int moves[4][2] = {{-1,0},{0,-1},{0,1},{1,0}};
     int shiftL[4] = {1,3,0,2};
@@ -22,11 +22,11 @@ struct Point
 
 void Traverse(Maze maze,Mouse mouse);
 
-void moveToNextPoint(std::set<Point> pois,Maze maze,Mouse mouse);
+void moveToNextPoint(Maze maze,Mouse mouse);
 
-bool ScanBlock(Maze maze,Mouse mouse);
+void ScanBlock(Maze maze,Mouse mouse,int& pois);
 
-void getToPoi(Maze maze,Mouse mouse,std::set<Point> pois);
+FollowPath getToPoi(Maze maze,Mouse mouse);
 
 bool validMove(int x,int y,int* movement,Maze maze);
 

@@ -26,4 +26,10 @@ void setupIR();
 
 void pulseIR();
 
+bool wallForward(); // TODO
+
+bool wallLeft(); // TODO
+
+bool wallRight(); // TODO
+
 #endif

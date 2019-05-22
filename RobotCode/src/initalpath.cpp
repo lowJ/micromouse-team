@@ -1,15 +1,36 @@
 
 #include "../inc/initalpath.hpp"
 #include "../inc/marcros.h"
-#include <set>
+#include "../inc/motors.h"
+#include "../inc/sensors.h"
+#include "../inc/followpath.h"
+#include <queue>
+
+void tickPosition();
 
 void Traverse(Maze maze, Mouse mouse)
 {
-    std::set<Point> pois;
+    int pois = 0;
     // mouse.startPos()
-    bool flag = True;
+    bool flag = false;
+    ScanBlock(maze,mouse,pois);
+
+    while (flag or pois > 0)
+    {
+        if(maze.hasWall(mouse.x,mouse.y,mouse.direction))
+        {
+            moveToNextPoint(maze,mouse);
+            --pois;
+            maze.unmarkPoi(mouse.x,mouse.y);
+        }
+        flag = false;
+        forwardTillDistance(forwardSpeed , 18);
+        tickPosition();
+        ScanBlock(maze,mouse,pois);
+    }
 }
 
+/*
 def Traverse(maze,mouse):
     pois = []
     mouse.startPos()
@@ -28,10 +49,53 @@ def Traverse(maze,mouse):
         mouse.setMovement(0)    
         mouse.stop()
         moveToNextPoint(pois,maze,mouse)
-        
+*/
+
+void moveToNextPoint(Maze maze,Mouse mouse)
+{
+    FollowPath path = getToPoi(maze,mouse);
+    path.runList();
+}
+
+/*
 def moveToNextPoint(pois,maze,mouse): #TODO
     mouse.moveAlongPath(getToPoi(maze,mouse,pois))
+*/
 
+void ScanBlock(Maze maze,Mouse mouse, int& pois)
+{
+
+    pulseIR();
+
+    if(wallForward())
+    {
+        maze.setWall(mouse.x,mouse.y,mouse.direction);
+    }
+
+    if(wallLeft())
+    {
+        maze.setWall(mouse.x,mouse.y,mouse.shiftL[mouse.direction]);
+    }
+    else
+    {
+        maze.markPoi(mouse.x,mouse.y,mouse.shiftL[mouse.direction]);
+        ++pois;        
+    }
+
+    if(wallRight())
+    {
+        maze.setWall(mouse.x,mouse.y,mouse.shiftR[mouse.direction]);
+    }
+    else
+    {
+        maze.markPoi(mouse.x,mouse.y,mouse.shiftR[mouse.direction]);
+        ++pois;
+    }
+    
+    
+}
+
+/*
 def ScanBlock(maze,mouse):
     pos = mouse.position
     
@@ -60,7 +124,37 @@ def ScanBlock(maze,mouse):
         poi.remove((pos[0],pos[1]))
 
     return True
+*/
 
+FollowPath getToPoi(Maze maze,Mouse mouse)
+{
+    int start[3] = {mouse.x,mouse.y,3-mouse.direction};
+    std::queue<int*> tasks;
+    stack.push(start);
+    int movements[4][3] = {{-1,0,0},{0,-1,1},{0,1,2},{1,0,3}};
+    while(!tasks.empty())
+    {
+        int* currTask = tasks.pop();
+        for(int* movement : movements)
+        {
+            int* currMove = move(currTask,movement,maze);
+            if(currMove != nullptr)
+            {
+                if(maze.isPoi(currTask[0],currTask[1]))
+                {
+                    FollowPath path = getPathList(maze,start,currMove);
+                    path.pushMovement('l');
+                    path.pushMovement('l');
+                    return path;
+                }
+
+                tasks.push(currMove);
+            }
+        }
+    }
+}
+
+/*
 def getToPoi(maze,mouse,pois):
     start = (mouse.position[0],mouse.position[1],3-mouse.direction)
     tasks = [maze.start]
@@ -81,6 +175,7 @@ def getToPoi(maze,mouse,pois):
                     return "rr" + path
                     
                 tasks.insert(0,currMove) # add in the new task to our tasks
+*/
 
 def validMove(x,y,movement,maze):
     ''' checks if the movement is valid for the maze '''
