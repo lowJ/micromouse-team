@@ -1,10 +1,12 @@
 //motorPIDtest.ino
 #include "PID.h"
-int encoder_pin_1A = 17;
-int encoder_pin_1B = 18;
+int encoder_pin_1A = 18;
+int encoder_pin_1B = 19;
+int encoder_pin_2A = 19;
+int encoder_pin_2B = 18;
 int receiverF = 14; //
 int receiverL = 15;
-int receiverFront = 0; //
+//int receiverFront = 0; //
 int receiverR = 16;
 int emitterF = 0;
 int emitterL = 1;
@@ -22,24 +24,24 @@ int sampleTime = 500; //in millis
 double kp, ki, kd = 1;
 PID pid_left = PID(0, 500, 0.5, 0.5, 0.5);
 PID pid_right = PID(0, 500, 0.5, 0.5, 0.5);
-volatile int encA = 0;
+volatile int encOne = 0;
 
 typedef struct{
   int motorEN, motorForward, motorReverse;
 } motor;
 
-motor FL = {0,0,0}; //format as {motorEN,motorForward,motorReverse}
+motor FL = {8,3,4}; //format as {motorEN,motorForward,motorReverse}
 motor FR = {0,0,0};
-motor BL = {0,0,0};
+motor BL = {7,6,5};
 motor BR = {0,0,0};
 motor motors[4] = {FL,FR,BL,BR};
 
 
 
 void motorSetup(motor m){
-  pinMode(m.motorEN,OUTPUT);
-  pinMode(m.motorForward,OUTPUT);
-  pinMode(m.motorReverse,OUTPUT);
+  pinMode(m.motorEN,INPUT);
+  pinMode(m.motorForward,INPUT);
+  pinMode(m.motorReverse,INPUT);
 }
 
 void motorMovement(motor m, int speed,int fv, int rv){
@@ -50,17 +52,19 @@ void motorMovement(motor m, int speed,int fv, int rv){
 }
 
 void forwardTillRotation(int speed, float rotations){
+  int left_change;
+  int right_change;
   pid_left.setTarget(rotations);
   pid_right.setTarget(rotations);
   motorMovement(motors[0], speed,1,0);
   //motorMovement(motors[2], speed, 1, 0);
-  while(encA < rotations * ENCODER_STEPS){
-    int left_change = pid_left.compute();
-    int right_change = pid_right.compute();
+  while(encOne < rotations * ENCODER_STEPS){
+     left_change = pid_left.compute();
+     right_change = pid_right.compute();
     if (left_change != 0 || right_change != 0)
     {
       motorMovement(motors[0], speed + left_change, 1, 0);
-      motorMovement(motors[2], speed + right_change, 1, 0);
+      //motorMovement(motors[2], speed + right_change, 1, 0);
     }
     }
   }
@@ -88,8 +92,8 @@ void encoderOne(){
 
 void setupInterrupt(){
   //Serial.println(digitalPinToInterrupt(encoder_pin_A));
-  attachInterrupt(digitalPinToInterrupt(encoder_pin_1A), encoderOne,CHANGE);
-  attachInterrupt(digitalPinToInterrupt(encoder_pin_1B), encoderOne,CHANGE);
+  attachInterrupt(encoder_pin_1A, encoderOne,CHANGE);
+  attachInterrupt(encoder_pin_1B, encoderOne,CHANGE);
   }
 
 void setupIR()
@@ -121,7 +125,14 @@ void setup()
 
 void loop()
 {
-forwardTillRotation(150,5.0);
+forwardTillRotation(100,5.0);
+Serial.println(analogRead(motors[0].motorEN));
+Serial.print("Emitter F:");
+Serial.println(analogRead(receiverF));
+Serial.print("Emitter L:");
+Serial.println(analogRead(receiverL));
+Serial.print("Emitter R:");
+Serial.println(analogRead(receiverR));
 delay(2000);
 
 }

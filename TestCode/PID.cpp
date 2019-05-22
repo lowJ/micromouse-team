@@ -1,6 +1,6 @@
 //PID.cpp
 /*working variables*/
-// This include is causing an error#include <Arduino.h>
+#include <Arduino.h>
 #include "PID.h"
 #include "marcros.h"
 int sampleTime = 500; //0.5 sec
