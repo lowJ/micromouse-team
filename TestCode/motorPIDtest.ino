@@ -43,7 +43,7 @@ void motorSetup(motor m){
 }
 
 void motorMovement(motor m, int speed,int fv, int rv){
-  pid_left.setTarget(speed);
+  //pid_left.setTarget(speed);
   analogWrite(m.motorEN,speed);
   digitalWrite(m.motorForward,fv);
   digitalWrite(m.motorReverse,rv);
