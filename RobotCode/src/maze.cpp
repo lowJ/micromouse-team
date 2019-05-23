@@ -101,3 +101,14 @@ bool Maze::inGoal(int* position)
 {
     return position[0] >= MAZE_WIDTH/2-1 && position[0] <= MAZE_WIDTH/2 && position[1] >= MAZE_HEIGHT/2-1 && position[1] <= MAZE_HEIGHT/2;
 }
+
+void Maze::resetTimes()
+{
+    for(int x = 0; x < MAZE_WIDTH; ++x)
+    {
+        for(int y = 0; y < MAZE_HEIGHT; ++y)
+        {
+            this->setTime(x,y,0);
+        }
+    }
+}

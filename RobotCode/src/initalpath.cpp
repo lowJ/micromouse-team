@@ -5,9 +5,15 @@
 #include "../inc/sensors.h"
 #include "../inc/followpath.h"
 #include "../inc/maze.h"
+#include "../inc/optimization.h"
 #include <queue>
 
-void tickPosition();
+void tickPosition(Mouse& mouse)
+{
+    int change[2] = mouse.moves[mouse.direction];
+    mouse.x += change[0];
+    mouse.y += change[1];
+}
 
 void Traverse(Maze& maze, Mouse& mouse)
 {
@@ -26,9 +32,13 @@ void Traverse(Maze& maze, Mouse& mouse)
         }
         flag = false;
         forwardTillDistance(forwardSpeed , 18);
-        tickPosition();
+        tickPosition(mouse);
         ScanBlock(maze,mouse,pois);
     }
+    ShortestPath(maze,mouse.x,mouse.y,mouse.direction);
+    FollowPath path = getOptimalPath(maze);
+    path.runList();
+    maze.resetTimes();
     // get to goal
 }
 

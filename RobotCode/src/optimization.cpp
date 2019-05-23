@@ -5,10 +5,12 @@
 #include "../inc/marcros.h"
 #include "../inc/followpath.h"
 
-void ShortestPath(Maze& maze)
+void ShortestPath(Maze& maze, int startX = 15, int startY = 0, int startDir = 0)
 {
-    maze.setPrevious(15,0,{-1,-1,-1});
+    maze.setPrevious(startX,startY,{-1,-1,-1});
     std::queue<int*> tasks;
+    int start[3] = {startX,startY,startDir};
+    tasks.push(start); 
     int currTask[3];
     int currMove[3];
     int movements[4][3] = {{-1,0,0},{0,-1,1},{0,1,2},{1,0,3}}

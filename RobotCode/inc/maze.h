@@ -36,6 +36,7 @@ class Maze
         void setTime(int x, int y, float time);
         bool inGoal(int* position);
         int** getGoals();
+        void resetTimes();
 };
 
 #endif

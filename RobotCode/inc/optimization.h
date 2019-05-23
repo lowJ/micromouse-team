@@ -4,10 +4,12 @@
 
 #include "../inc/followpath.h"
 
-void ShortestPath(Maze& maze);
+void ShortestPath(Maze& maze, int startX = 15, int startY = 0, int startDir = 0);
 
 bool validMove(int x, int y, int* movement, Maze& maze);
 
 int* move(int* task , int* movement, Maze& maze);
+
+FollowPath getOptimalPath(Maze& maze);
 
 #endif
