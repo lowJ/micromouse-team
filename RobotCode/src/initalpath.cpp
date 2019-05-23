@@ -9,7 +9,7 @@
 
 void tickPosition();
 
-void Traverse(Maze maze, Mouse mouse)
+void Traverse(Maze& maze, Mouse& mouse)
 {
     int pois = 0;
     // mouse.startPos()
@@ -29,6 +29,7 @@ void Traverse(Maze maze, Mouse mouse)
         tickPosition();
         ScanBlock(maze,mouse,pois);
     }
+    // get to goal
 }
 
 /*
@@ -52,7 +53,7 @@ def Traverse(maze,mouse):
         moveToNextPoint(pois,maze,mouse)
 */
 
-void moveToNextPoint(Maze maze,Mouse mouse)
+void moveToNextPoint(Maze& maze,Mouse& mouse)
 {
     FollowPath path = getToPoi(maze,mouse);
     path.runList();
@@ -63,7 +64,7 @@ def moveToNextPoint(pois,maze,mouse): #TODO
     mouse.moveAlongPath(getToPoi(maze,mouse,pois))
 */
 
-void ScanBlock(Maze maze,Mouse mouse, int& pois)
+void ScanBlock(Maze& maze,Mouse& mouse, int& pois)
 {
 
     pulseIR();
@@ -127,7 +128,7 @@ def ScanBlock(maze,mouse):
     return True
 */
 
-FollowPath getToPoi(Maze maze,Mouse mouse)
+FollowPath getToPoi(Maze& maze,Mouse& mouse)
 {
     int start[3] = {mouse.x,mouse.y,3-mouse.direction};
     std::queue<int*> tasks;
@@ -178,7 +179,7 @@ def getToPoi(maze,mouse,pois):
                 tasks.insert(0,currMove) # add in the new task to our tasks
 */
 
-bool validMove(int x,int y,int* movement,Maze maze)
+bool validMove(int x,int y,int* movement,Maze& maze)
 {
     return 0 <= x + movement[0] and x + movement[0] <= MAZE_WIDTH-1 and 0 <= y + movement[1] and y + movement[1] <= MAZE_HEIGHT-1 and !maze.hasWall(x,y,movement[2]);
 }
@@ -189,7 +190,7 @@ def validMove(x,y,movement,maze):
     return 0 <= x + movement[0] <= 15 and 0 <= y + movement[1] <= 15 and not maze.maze[x][y].moves[movement[2]] # returns true if pos exists on the maze and it is not walled off
 */
 
-int* move(int* task,int* movement,Maze maze)
+int* move(int* task,int* movement,Maze& maze)
 {
     if(validMove(task[0],task[1],movement,maze))
     {
@@ -213,10 +214,51 @@ def move(task,movement,maze):
     return None # return no task if no need to move
 */
 
-FollowPath getPathList(Maze maze,int* start ,int* end)
+bool notStart(int* curr, int* start)
+{
+    return !(curr[0] == start[0] and curr[1] == start[1]);
+}
+
+int getLeft(int pos)
+{
+    switch(pos)
+    {
+        case 0:
+        return 1;
+        case 1:
+        return 3;
+        case 2:
+        return 0;
+        case 3;
+        return 2;
+    }
+}
+
+FollowPath getPathList(Maze& maze,int* start ,int* end)
 {
     FollowPath path;
+    int currentPos[3] = end;
+    int nextPos[3];
+    do
+    {
+        nextPos = maze.getPrevious(currentPos[0],currentPos[1]);
+        if(nextPos[2] == currentPos[2])
+        {
+            path.pushMovement('f');
+        }
+        else if(getLeft(nextPos[2]) == currentPos[2])
+        {
+            path.pushMovement('l');
+            path.pushMovement('f');
+        }
+        else
+        {
+            path.pushMovement('r');
+            path.pushMovement('f');
+        }
 
+    }
+    while(notStart(currentPos,start));
     return path;
 }
 

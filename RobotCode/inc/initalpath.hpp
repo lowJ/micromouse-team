@@ -20,19 +20,19 @@ struct Point
     int x,y;
 };
 
-void Traverse(Maze maze,Mouse mouse);
+void Traverse(Maze& maze,Mouse& mouse);
 
-void moveToNextPoint(Maze maze,Mouse mouse);
+void moveToNextPoint(Maze& maze,Mouse& mouse);
 
-void ScanBlock(Maze maze,Mouse mouse,int& pois);
+void ScanBlock(Maze& maze,Mouse& mouse,int& pois);
 
-FollowPath getToPoi(Maze maze,Mouse mouse);
+FollowPath getToPoi(Maze& maze,Mouse& mouse);
 
-bool validMove(int x,int y,int* movement,Maze maze);
+bool validMove(int x,int y,int* movement,Maze& maze);
 
-int* move(int* task,int* movement,Maze maze);
+int* move(int* task,int* movement,Maze& maze);
 
-FollowPath getPathList(Maze maze,int* start ,int* end);
+FollowPath getPathList(Maze& maze,int* start ,int* end);
 
 
 #endif
