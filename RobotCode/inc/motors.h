@@ -7,7 +7,13 @@
 
 void motorSetup(motor m);
 
-void motorMovement(motor m, int speed,int fv, int rv);
+void motorMovement(motor m, int enable, int f_speed, int r_speed);
+
+void encoderSetup(motor m);
+
+void interruptSetup(motor m);
+
+void encoderTick();
 
 void runTillThresholdForward(int& encoderVal, int threshold);
 

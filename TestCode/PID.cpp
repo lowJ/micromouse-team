@@ -1,27 +1,29 @@
 //PID.cpp
 /*working variables*/
-<<<<<<< HEAD
-=======
-// This include is causing an error#include <Arduino.h>
->>>>>>> db8752d710a76274acafa713b21caad8db08a393
 #include <Arduino.h>
-#include "PID.h"
-#include "marcros.h"
+#include "..\\inc\\PID.hpp"
+#include "..\\inc\\marcros.hpp"
 int sampleTime = 500; //0.5 sec
+int pwm_multi = 4;
 
-PID::PID(int target_speed, int sample_time, double Kp, double Ki, double Kd)
-: sample_time(sampleTime), kp(Kp), ki(Ki), kd(Kd){
+PID::PID(double targetSpeed, int sampleTime, double Kp, double Ki, double Kd)
+: target_speed(targetSpeed), sample_time(sampleTime), kp(Kp), ki(Ki), kd(Kd)
+{
+	lastTime = millis();
+	last_num_rotations = 0;
 }
 
-int PID::compute()
+double PID::compute(double current_rotations)
 {
+   double pwm_change;
    unsigned long now = millis();
    int timeChange = (now - lastTime);
-   
    if(timeChange>=sample_time)
    {
       /*Compute all the working error variables*/
-      current_speed = current_rotations/timeChange;
+      current_speed = double(abs(current_rotations) - last_num_rotations)/double(timeChange/1000);
+	Serial.print("Current speed, rps:");
+	Serial.println(current_speed);
       double error = target_speed - current_speed;
       integral_term += (ki * error);
       double dInput = (current_speed - lastInput);
@@ -31,9 +33,12 @@ int PID::compute()
       /*Remember some variables for next time*/
       lastInput = current_speed;
       lastTime = now;
-      return rotation_change_output;
+      last_num_rotations = current_rotations;
+      pwm_change = rotation_change_output*pwm_multi; // converts rps change to pwm change
+      Serial.println(pwm_change);
+      return pwm_change; 
    }
-   else:
+   else
       return 0;
 
 }
@@ -50,7 +55,7 @@ void PID::setTunings(double& Kp, double& Ki, double& Kd)
    kd = Kd / sample_timeInSec;
 }
  
-void PID::setsample_time(int Newsample_time)
+void PID::setSampleTime(int Newsample_time)
 {
    if (Newsample_time > 0)
    {
@@ -60,9 +65,9 @@ void PID::setsample_time(int Newsample_time)
       sample_time = (unsigned long)Newsample_time;
    }
 }
-
-void PID::setTargetRotation(int new target_speed)
+//This method and setTarget currently do the same thing, this may change
+void PID::setTargetRotation(int new_target_pw)
 {
- target_speed = new target_speed;
+ target_speed = new_target_pw;
 
 }

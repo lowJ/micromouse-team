@@ -11,8 +11,10 @@
 
 // Defines a motor stucture to allow for easier acess to pins
 typedef struct{
-  int motorEN, motorForward, motorReverse;
+  int motorEN, motorForward, motorReverse, encP1, encP2; 
   bool reverse;
+  volatile int enc_value;
+  int enc_last, enc_current;
 } motor;
 
 // Define movespeed constants
@@ -23,9 +25,9 @@ typedef struct{
 #define FL_motorEN 8
 #define FL_motorForward 5
 #define FL_motorReverse 6
-#define FL_encoder_1 17
-#define FL_encoder_2 18
-const motor FL = {FL_motorEN,FL_motorForward,FL_motorReverse,true};
+#define FL_encP1 17
+#define FL_encP2 18
+const motor FL = {FL_motorEN,FL_motorForward,FL_motorReverse,true, FL_encP1, FL_encP2};
 
 // Define front right motor pins
 #define FR_motorEN 7
@@ -33,8 +35,9 @@ const motor FL = {FL_motorEN,FL_motorForward,FL_motorReverse,true};
 #define FR_motorReverse 4
 #define FR_encoder_1 19
 #define FR_encoder_2 20
-const motor FR {FR_motorEN,FR_motorForward,FR_motorReverse,false};
+const motor FR {FR_motorEN,FR_motorForward,FR_motorReverse,false, FR_encP1, FR_encP2};
 
+/*  //Removed BL and BR motors
 // Define back left motor pins
 #define BL_motorEN 8
 #define BL_motorForward 0
@@ -48,9 +51,9 @@ const motor BL {BL_motorEN,BL_motorForward,BL_motorReverse,true};
 #define BR_motorReverse 0
 #define BR_encoder 0
 const motor BR {BR_motorEN,BR_motorForward,BR_motorReverse,false};
-
+*/
 // Define motor array to allow for looping through motors
-const motor motors[4] = {FL,FR,BL,BR};
+const motor motors[2] = {FL,FR};
 
 // Define IR reciever pin values
 #define receiverF 15

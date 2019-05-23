@@ -7,28 +7,52 @@
 // Sets up a motor's pins
 void motorSetup(motor m)
 {
-    pinMode(m.motorEN,OUTPUT);
-    pinMode(m.motorForward,OUTPUT);
-    pinMode(m.motorReverse,OUTPUT);
+    pinMode(m.motorEN,INPUT);
+    pinMode(m.motorForward,INPUT);
+    pinMode(m.motorReverse,INPUT);
 }
 
 // Moves a motor with a speed <speed>
 // <fv> of 1 with <rv> of 0 moves motor forward
 // <rv> of 1 with <fv> of 0 moves motor backward
-void motorMovement(motor m, int speed,int fv, int rv)
+void motorMovement(motor m, int enable,int f_speed, int r_speed)
 {
-    if (m.reverse == true and speed > 0)
-    {
-        analogWrite(m.motorEN,speed);
-        digitalWrite(m.motorForward,1-fv);
-        digitalWrite(m.motorReverse,1-rv);
+    digitalWrite(m.motorEN, enable);
+    analogWrite(m.motorForward, f_speed);
+    analogWrite(m.motorReverse, r_speed);
+}
+void encoderSetup(motor m)
+{
+  pinMode(m.encP1,INPUT);
+  pinMode(m.encP2,INPUT);
+  enc_last = digitalRead(m.encP1);
+}
+
+void interruptSetup(motor m)
+{
+
+}
+
+void encoderTick()
+{
+  //Serial.println("Encoder call");
+  int incr;
+  if (reverse) {incr = -1;}
+  else {incr = 1;}
+  enc_current = digitalRead(m.encP1);
+
+  if (enc_last != enc_current){
+   
+    if (enc_current != digitalRead(m.encP2)){
+      enc_value += incr; //forward (clockwise for the left(?) motor)
     }
-    else
-    {
-        analogWrite(m.motorEN,speed);
-        digitalWrite(m.motorForward,fv);
-        digitalWrite(m.motorReverse,rv);
+    else{
+      enc_value -= incr; //backward (counter-clockwise for the left(?) motor)
     }
+  }
+  //Serial.println(enc_value);
+  //Serial.println("  ");
+  enc_last = enc_current;
 }
 
 // Stops the robot when <encoderVal> > <threshold>
@@ -56,7 +80,7 @@ void runTillThresholdBackward(int& encoderVal, int threshold)
 // Moves robot forward with speed <speed>
 void forward(int speed)
 {
-    for (int i = 0; i <= 3; i++)
+    for (int i = 0; i <= 1; i++)
     {
         motorMovement(motors[i],speed,1,0);
     }
@@ -72,7 +96,7 @@ void forwardTillDistance(int speed, float distance)
 // Moves robot backward with speed <speed>
 void reverse(int speed)
 {
-    for (int i = 0; i <= 3; i++)
+    for (int i = 0; i <= 1; i++)
     {
         motorMovement(motors[i],speed,0,1);
     }
@@ -110,7 +134,7 @@ void turnRight(int speed,int degrees)
 // Stops all robot motors
 void off()
 {
-    for (int i = 0; i <= 3; i++)
+    for (int i = 0; i <= 1; i++)
     {
         motorMovement(motors[i],0,0,0);
     }
