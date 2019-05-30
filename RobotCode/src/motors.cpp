@@ -30,7 +30,8 @@ void encoderSetup(motor m)
 
 void interruptSetup(motor m)
 {
-
+    attachInterrupt(m.encP1, encoderTick, CHANGE);
+    attachInterrupt(m.encP2, encoderTick, CHANGE);
 }
 
 void encoderTick()
@@ -39,11 +40,11 @@ void encoderTick()
   int incr;
   if (reverse) {incr = -1;}
   else {incr = 1;}
-  enc_current = digitalRead(m.encP1);
+  enc_current = digitalRead(this.encP1);
 
   if (enc_last != enc_current){
    
-    if (enc_current != digitalRead(m.encP2)){
+    if (enc_current != digitalRead(this.encP2)){
       enc_value += incr; //forward (clockwise for the left(?) motor)
     }
     else{
@@ -82,7 +83,7 @@ void forward(int speed)
 {
     for (int i = 0; i <= 1; i++)
     {
-        motorMovement(motors[i],speed,1,0);
+        motorMovement(motors[i],1,speed,0);
     }
 }
 
@@ -98,7 +99,7 @@ void reverse(int speed)
 {
     for (int i = 0; i <= 1; i++)
     {
-        motorMovement(motors[i],speed,0,1);
+        motorMovement(motors[i],1,0,speed);
     }
 }
 
@@ -112,10 +113,8 @@ void reverseTillDistance(int speed, float distance)
 // Turns robot left, counterclockwise, at speed <speed>
 void turnLeft(int speed, int degrees)
 {
-    motorMovement(FL,speed,0,1);
-    motorMovement(BL,speed,0,1);
-    motorMovement(FR,speed,1,0);
-    motorMovement(BR,speed,1,0);
+    motorMovement(FL,1,0,speed);
+    motorMovement(FR,1,speed,0);
 
     runTillThresholdForward(FR_enc.ticks,static_cast<int>(DEG_TO_STEP * degrees));
 }
@@ -123,10 +122,8 @@ void turnLeft(int speed, int degrees)
 // Turns robot right, clockwise, at speed <speed>
 void turnRight(int speed,int degrees)
 {
-    motorMovement(FL,speed,1,0);
-    motorMovement(BL,speed,1,0);
-    motorMovement(FR,speed,0,1);
-    motorMovement(BR,speed,0,1);
+    motorMovement(FL,1,speed,0);
+    motorMovement(FR,1,0,speed);
 
     runTillThresholdForward(FL_enc.ticks,static_cast<int>(DEG_TO_STEP * degrees));
 }
