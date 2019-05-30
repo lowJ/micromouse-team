@@ -2,8 +2,8 @@
 #ifndef INITPATH
 #define INITPATH
 
-#include "maze.h"
-#include "followpath.h"
+#include "maze.hpp"
+#include "followpath.hpp"
 
 struct Mouse
 {
