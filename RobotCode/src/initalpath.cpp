@@ -1,11 +1,11 @@
 
 #include "../inc/initalpath.hpp"
-#include "../inc/marcros.h"
-#include "../inc/motors.h"
-#include "../inc/sensors.h"
-#include "../inc/followpath.h"
-#include "../inc/maze.h"
-#include "../inc/optimization.h"
+#include "../inc/marcros.hpp"
+#include "../inc/motors.hpp"
+#include "../inc/sensors.hpp"
+#include "../inc/followpath.hpp"
+#include "../inc/maze.hpp"
+#include "../inc/optimization.hpp"
 #include <queue>
 
 void tickPosition(Mouse& mouse)
@@ -147,8 +147,10 @@ FollowPath getToPoi(Maze& maze,Mouse& mouse)
     while(!tasks.empty())
     {
         int* currTask = tasks.pop();
-        for(int* movement : movements)
+        int* movement;
+        for(int i = 0; i < 4; ++i)
         {
+            movement = movements[i];
             int* currMove = move(currTask,movement,maze);
             if(currMove != nullptr)
             {

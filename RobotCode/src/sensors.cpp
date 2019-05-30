@@ -1,8 +1,8 @@
 // Adds functions for using different sensors on the robot
 
 #include <Arduino.h>
-#include "../inc/sensors.h"
-#include "../inc/marcros.h"
+#include "../inc/sensors.hpp"
+#include "../inc/marcros.hpp"
 
 // Function to tick up an encoder
 void encoder::increment()

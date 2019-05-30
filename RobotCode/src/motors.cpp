@@ -1,8 +1,8 @@
 // methods to move the robot around
 
 #include <Arduino.h>
-#include "../inc/motors.h"
-#include "../inc/marcros.h"
+#include "../inc/motors.hpp"
+#include "../inc/marcros.hpp"
 
 // Sets up a motor's pins
 void motorSetup(motor m)

@@ -1,6 +1,6 @@
 
-#import "../inc/followpath.h"
-#import "../inc/motors.h"
+#import "../inc/followpath.hpp"
+#import "../inc/motors.hpp"
 #include <Arduino.h>
 #include <deque>
 

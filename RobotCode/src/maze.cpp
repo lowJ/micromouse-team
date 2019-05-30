@@ -1,7 +1,7 @@
 // defines the maze and functions to easily acess data within it
 
-#include "../inc/maze.h"
-#include "../inc/marcros.h"
+#include "../inc/maze.hpp"
+#include "../inc/marcros.hpp"
 
 // Constructs a new block with some initial values
 block::block() 

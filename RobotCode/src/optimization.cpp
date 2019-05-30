@@ -1,9 +1,9 @@
 
-#include "optimization.h"
-#include "maze.h"
+#include "optimization.hpp"
+#include "maze.hpp"
 #include <queue>
-#include "../inc/marcros.h"
-#include "../inc/followpath.h"
+#include "../inc/marcros.hpp"
+#include "../inc/followpath.hpp"
 
 void ShortestPath(Maze& maze, int startX = 15, int startY = 0, int startDir = 0)
 {
@@ -17,8 +17,10 @@ void ShortestPath(Maze& maze, int startX = 15, int startY = 0, int startDir = 0)
     while(!tasks.empty())
     {
         currTask = tasks.pop();
-        for(int* movement: movements)
+        int* movement;
+        for(int i = 0; i < 4; ++i)
         {
+            movement = movements[i];
             currMove = move(currTask,movement,maze);
             if(currMove != nullptr && !maze.inGoal(currMove))
             {
