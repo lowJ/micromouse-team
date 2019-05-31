@@ -33,8 +33,8 @@ const motor FL = {FL_motorEN,FL_motorForward,FL_motorReverse,true, FL_encP1, FL_
 #define FR_motorEN 7
 #define FR_motorForward 3
 #define FR_motorReverse 4
-#define FR_encoder_1 19
-#define FR_encoder_2 20
+#define FR_encP1 19
+#define FR_encP2 20
 const motor FR {FR_motorEN,FR_motorForward,FR_motorReverse,false, FR_encP1, FR_encP2};
 
 /*  //Removed BL and BR motors

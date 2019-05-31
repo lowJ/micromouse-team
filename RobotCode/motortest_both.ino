@@ -4,10 +4,10 @@
 //
 //    MOVEMENT CODE   //
 //
-int encoder_pin_1A = 17;
-int encoder_pin_1B = 18;
-int encoder_pin_2A = 19;
-int encoder_pin_2B = 20;
+int FL_encP1 = 17;
+int FL_encP2 = 18;
+int FR_encP1 = 19;
+int FR_encP2 = 20;
 /*
 int receiverF = 14;
 int receiverL = 15;
@@ -219,10 +219,10 @@ void setupIR()
 //
 
 void setupEncoder(){
-  pinMode(encoder_pin_1A,INPUT);
-  pinMode(encoder_pin_1B,INPUT);
-  pinMode(encoder_pin_2A,INPUT);
-  pinMode(encoder_pin_2B,INPUT);
+  pinMode(FL_encP1,INPUT);
+  pinMode(FL_encP2,INPUT);
+  pinMode(FR_encP1,INPUT);
+  pinMode(FR_encP2,INPUT);
 }
 
 
@@ -230,12 +230,12 @@ void setupEncoder(){
 void encoderOne(){
   //Serial.println("EncoderOne call");
   
-  a1_current = digitalRead(encoder_pin_1A);
+  a1_current = digitalRead(FL_encP1);
   //Serial.println(a1_last);
   //Serial.println(a1_current);
   if (a1_last != a1_current){
    
-    if (a1_current != digitalRead(encoder_pin_1B)){
+    if (a1_current != digitalRead(FL_encP2)){
       encOne++; //clockwise
     }
     else{
@@ -250,12 +250,12 @@ void encoderOne(){
 void encoderTwo(){
   //Serial.println("EncoderTwo call");
  
-  a2_current = digitalRead(encoder_pin_2A);
+  a2_current = digitalRead(FR_encP1);
   //Serial.println(a2_last);
   //Serial.println(a2_current);
   if (a2_last != a2_current){
    
-    if (a2_current != digitalRead(encoder_pin_2B)){
+    if (a2_current != digitalRead(FR_encP2)){
       encTwo++; //clockwise
     }
     else{
@@ -270,10 +270,10 @@ void encoderTwo(){
 
 void setupInterrupt(){
   //Serial.println(digitalPinToInterrupt(encoder_pin_A));
-  attachInterrupt(encoder_pin_1A, encoderOne,CHANGE);
-  attachInterrupt(encoder_pin_1B, encoderOne,CHANGE);
-  attachInterrupt(encoder_pin_2A, encoderTwo, CHANGE);
-  attachInterrupt(encoder_pin_2B, encoderTwo, CHANGE);
+  attachInterrupt(FL_encP1, encoderOne,CHANGE);
+  attachInterrupt(FL_encP2, encoderOne,CHANGE);
+  attachInterrupt(FR_encP1, encoderTwo, CHANGE);
+  attachInterrupt(FR_encP2, encoderTwo, CHANGE);
   }
 
 void motorSpeedTest(){
@@ -318,8 +318,8 @@ void setup() {
   setupEncoder();
   setupInterrupt();
   //pinMode(receiverFront,INPUT);
-  a1_last = digitalRead(encoder_pin_1A);
-  a2_last = digitalRead(encoder_pin_2A);
+  a1_last = digitalRead(FL_encP1);
+  a2_last = digitalRead(FR_encP1);
   //setupIR();
   encOne = 0;
   encTwo = 0;
