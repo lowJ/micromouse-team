@@ -40,11 +40,11 @@ void encoderTick()
   int incr;
   if (reverse) {incr = -1;}
   else {incr = 1;}
-  enc_current = digitalRead(this.encP1);
+  enc_current = digitalRead(this->encP1);
 
   if (enc_last != enc_current){
    
-    if (enc_current != digitalRead(this.encP2)){
+    if (enc_current != digitalRead(this->encP2)){
       enc_value += incr; //forward (clockwise for the left(?) motor)
     }
     else{
@@ -59,9 +59,14 @@ void encoderTick()
 // Stops the robot when <encoderVal> > <threshold>
 void runTillThresholdForward(int& encoderVal, int threshold)
 {
+    double left_change;
+    double right_change;
+    double left_new_speed = speed;
+    double right_new_speed = speed;
     int initEnc = encoderVal
     while(encoderVal-initEnc < threshold)
     {
+        
         continue;
     }
     off();
