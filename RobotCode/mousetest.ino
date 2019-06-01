@@ -1,14 +1,17 @@
 //mousetest.ino
 #include ".\\inc\\PID.hpp"
 #include ".\\inc\\marcros.hpp"
+#include ".\\inc\\sensors.hpp"
 //
 //
 //    MOVEMENT CODE   //
 //
+/*
 int FL_encP1 = 17;
 int FR_encP2 = 18;
 int FR_encP1 = 19;
 int FR_encP2 = 20;
+*/
 /*
 int receiverF = 14;
 int receiverL = 15;
@@ -69,6 +72,113 @@ void forward(int speed){
   }
 }
 */
+
+void setupIR()
+{
+    pinMode(receiverF,INPUT);
+    pinMode(receiverL,INPUT);
+    pinMode(receiverR,INPUT);
+
+    pinMode(emitterF,OUTPUT);
+    pinMode(emitterL,OUTPUT);
+    pinMode(emitterR,OUTPUT);
+    digitalWrite(emitterF,HIGH);
+    digitalWrite(emitterL,HIGH);
+    digitalWrite(emitterR,HIGH);
+}
+
+//
+//
+//    ENCODER CODE    //
+//
+
+void motorSpeedTest(){
+  motor m = motors[0];
+  int motor_speed = 0;
+  int current_time = 0;
+  int prev_time = 0;
+  digitalWrite(m.motorEN,1);
+  analogWrite(m.motorForward, motor_speed);
+  analogWrite(m.motorReverse, 0);
+  //int i = 0;
+  while (motor_speed < 246)
+  {
+    current_time = millis();
+    if (current_time - prev_time > 500){
+       analogWrite(m.motorForward, motor_speed);
+       motor_speed += 10;
+       prev_time = current_time;
+    }
+  }
+ analogWrite(m.motorForward, 0);
+  
+}
+//
+//
+//    SETUP AND LOOP    //
+//
+void setup() {
+
+  for (int i = 0; i <= 1; i++){
+    motorSetup(motors[i]);
+    encoderSetup(motors[i]);
+
+  }
+  Serial.begin(9600);
+    //PID pid_left = PID(0, 1000, kp, ki, kd);
+    //PID pid_right = PID(0, 1000, kp, ki, kd);
+  setupEncoder();
+  setupInterrupt();
+  //pinMode(receiverFront,INPUT);
+  a1_last = digitalRead(FL_encP1);
+  a2_last = digitalRead(FR_encP1);
+  setupIR();
+  encOne = 0;
+  encTwo = 0;
+}
+
+void loop() {
+  Serial.println("Hi");
+  // put your main code here, to run repeatedly:
+  /*
+  Serial.println(analogRead(motors[0].motorEN));
+  Serial.print("Emitter F:");
+  Serial.println(analogRead(receiverF));
+  Serial.print("Emitter L:");
+  Serial.println(analogRead(receiverL));
+  Serial.print("Emitter R:");
+  Serial.println(analogRead(receiverR));
+  delay(2000);
+  */
+  /*
+  for (int i = 0; i < 100; i+=10)
+  {
+    calcRotationsPerSecond(100+i);
+    Serial.println(" ");
+  }
+  */
+
+  //motorSpeedTest();
+  
+  
+  forwardTillDistance(80,10.0);
+  pulseIR();
+  while(IR_val[1] < 80)
+  {
+      turnLeft(80, 90);
+      pulseIR();
+  }
+  forwardTillDistance(80,10.0);
+  delay(5000);
+  /*
+  Serial.println("Encoder");
+  Serial.println(encOne);
+  
+  */
+  //reverseTillRotation(100,3.0);
+}
+
+/*
 void forwardTillRotation(int speed, double rotations){
   motor m_left = motors[0];
   motor m_right = motors[1];
@@ -166,103 +276,4 @@ void calcRotationsPerSecond(int speed)
   Serial.println(rot_per_sec_two/float(speed));
   delay(10000);
 }
-
-
-void setupIR()
-{
-    pinMode(receiverF,INPUT);
-    pinMode(receiverL,INPUT);
-    pinMode(receiverR,INPUT);
-
-    pinMode(emitterF,OUTPUT);
-    pinMode(emitterL,OUTPUT);
-    pinMode(emitterR,OUTPUT);
-    digitalWrite(emitterF,HIGH);
-    digitalWrite(emitterL,HIGH);
-    digitalWrite(emitterR,HIGH);
-}
-
-//
-//
-//    ENCODER CODE    //
-//
-
-void motorSpeedTest(){
-  motor m = motors[0];
-  int motor_speed = 0;
-  int current_time = 0;
-  int prev_time = 0;
-  digitalWrite(m.motorEN,1);
-  analogWrite(m.motorForward, motor_speed);
-  analogWrite(m.motorReverse, 0);
-  //int i = 0;
-  while (motor_speed < 246)
-  {
-    current_time = millis();
-    if (current_time - prev_time > 500){
-       analogWrite(m.motorForward, motor_speed);
-       motor_speed += 10;
-       prev_time = current_time;
-    }
-  }
- analogWrite(m.motorForward, 0);
-  
-}
-//
-//
-//    SETUP AND LOOP    //
-//
-void setup() {
-  /*
-  for (int i = 0; i <= 3; i++){
-    motorSetup(motors[i]);
-  }
-  */
-  Serial.begin(9600);
-  
-  motorSetup(motors[0]);
-  
-  motorSetup(motors[1]);
-  
-  
-  setupEncoder();
-  setupInterrupt();
-  //pinMode(receiverFront,INPUT);
-  a1_last = digitalRead(FL_encP1);
-  a2_last = digitalRead(FR_encP1);
-  //setupIR();
-  encOne = 0;
-  encTwo = 0;
-}
-
-void loop() {
-  Serial.println("Hi");
-  // put your main code here, to run repeatedly:
-  /*
-  Serial.println(analogRead(motors[0].motorEN));
-  Serial.print("Emitter F:");
-  Serial.println(analogRead(receiverF));
-  Serial.print("Emitter L:");
-  Serial.println(analogRead(receiverL));
-  Serial.print("Emitter R:");
-  Serial.println(analogRead(receiverR));
-  delay(2000);
-  */
-  /*
-  for (int i = 0; i < 100; i+=10)
-  {
-    calcRotationsPerSecond(100+i);
-    Serial.println(" ");
-  }
-  */
- 
-  //motorSpeedTest();
-  forwardTillRotation(125,10.0);
-  delay(5000);
-  /*
-  Serial.println("Encoder");
-  Serial.println(encOne);
-  
-  */
-  //reverseTillRotation(100,3.0);
-}
+*/

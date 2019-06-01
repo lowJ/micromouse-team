@@ -6,7 +6,7 @@
 // Structure to allow for easier use of encoders
 typedef struct{
   int pin1, pin2, ticks;
-  void increment();
+  void encoderTick();
 } encoder;
 
 encoder FL_enc = {FL_encoder_1,FL_encoder_2,0};

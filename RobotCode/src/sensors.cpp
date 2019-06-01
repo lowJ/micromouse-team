@@ -7,6 +7,25 @@
 // Function to tick up an encoder
 void encoder::increment()
 {
+  //Serial.println("Encoder call");
+  int incr;
+  if (reverse) {incr = -1;}
+  else {incr = 1;}
+  enc_current = digitalRead(m.encP1);
+
+  if (enc_last != enc_current){
+   
+    if (enc_current != digitalRead(m.encP2)){
+      enc_value += incr; //forward (clockwise for the left(?) motor)
+    }
+    else{
+      enc_value -= incr; //backward (counter-clockwise for the left(?) motor)
+    }
+  }
+  //Serial.println(enc_value);
+  //Serial.println("  ");
+  enc_last = enc_current;
+}
     this->ticks++;
 }
 
@@ -57,6 +76,9 @@ void setupIR()
     pinMode(emitterF,OUTPUT)
     pinMode(emitterL,OUTPUT)
     pinMode(emitterR,OUTPUT)
+    digitalWrite(emitterF,HIGH);
+    digitalWrite(emitterL,HIGH);
+    digitalWrite(emitterR,HIGH);
 }
 
 // Pulses all IR sensors and places output in IR_vals, {left value,middle value,right value}
