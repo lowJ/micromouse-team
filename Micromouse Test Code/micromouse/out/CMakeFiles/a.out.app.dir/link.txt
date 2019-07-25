@@ -1,0 +1,1 @@
+/usr/bin/clang++     CMakeFiles/a.out.app.dir/app/direction.cpp.o CMakeFiles/a.out.app.dir/app/main.cpp.o CMakeFiles/a.out.app.dir/app/maze.cpp.o CMakeFiles/a.out.app.dir/app/mouse.cpp.o CMakeFiles/a.out.app.dir/app/testhelper.cpp.o  -o bin/a.out.app -lpthread -lc++ 

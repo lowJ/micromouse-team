@@ -1,0 +1,5 @@
+/home/ics45c/projects/micromouse/out/CMakeFiles/edit_cache.dir
+/home/ics45c/projects/micromouse/out/CMakeFiles/rebuild_cache.dir
+/home/ics45c/projects/micromouse/out/CMakeFiles/a.out.gtest.dir
+/home/ics45c/projects/micromouse/out/CMakeFiles/a.out.app.dir
+/home/ics45c/projects/micromouse/out/CMakeFiles/a.out.exp.dir

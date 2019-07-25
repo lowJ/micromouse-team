@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/ics45c/projects/micromouse/app/direction.hpp
+
+/home/ics45c/projects/micromouse/app/maze.cpp
+maze.hpp
+/home/ics45c/projects/micromouse/app/maze.hpp
+iostream
+-
+mouse.hpp
+/home/ics45c/projects/micromouse/app/mouse.hpp
+direction.hpp
+/home/ics45c/projects/micromouse/app/direction.hpp
+stack
+-
+array
+-
+vector
+-
+algorithm
+-
+
+/home/ics45c/projects/micromouse/app/maze.hpp
+array
+-
+mouse.hpp
+/home/ics45c/projects/micromouse/app/mouse.hpp
+
+/home/ics45c/projects/micromouse/app/mouse.hpp
+array
+-
+

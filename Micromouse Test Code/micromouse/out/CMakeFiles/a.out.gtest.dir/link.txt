@@ -1,0 +1,1 @@
+/usr/bin/clang++     CMakeFiles/a.out.gtest.dir/gtest/gtestmain.cpp.o CMakeFiles/a.out.gtest.dir/app/direction.cpp.o CMakeFiles/a.out.gtest.dir/app/maze.cpp.o CMakeFiles/a.out.gtest.dir/app/mouse.cpp.o CMakeFiles/a.out.gtest.dir/app/testhelper.cpp.o  -o bin/a.out.gtest -lpthread -lc++ -lgtest -lgtest_main 
